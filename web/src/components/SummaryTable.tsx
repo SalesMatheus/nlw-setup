@@ -5,6 +5,9 @@ const weekDays = ["S", "M", "T", "W", "T", "F", "S"];
 
 const summaryDates = generateDatesFromYearBeginning();
 
+const minimunSummaryDatesSize = 18 * 7;
+const amountOfDaysToFill = minimunSummaryDatesSize - summaryDates.length;
+
 export const SummaryTable = () => {
   return (
     <div className="w-full flex">
@@ -19,8 +22,13 @@ export const SummaryTable = () => {
         ))}
       </div>
       <div className="grid grid-rows-7 grid-flow-col gap-3">
-          {summaryDates.map((date) => (
-            <HabitDay key={date.toString()}/>
+        {summaryDates.map((date) => (
+          <HabitDay key={date.toString()} type="missed" />
+        ))}
+
+        {minimunSummaryDatesSize > 0 &&
+          Array.from({ length: amountOfDaysToFill }).map((_, index) => (
+            <HabitDay key={index} type="empty" />
           ))}
       </div>
     </div>
