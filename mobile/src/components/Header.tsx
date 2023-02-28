@@ -1,10 +1,12 @@
 import { View, TouchableOpacity, Text } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import colors from "tailwindcss/colors";
+import { useNavigation } from "@react-navigation/native";
 
 import Logo from "../assets/logo.svg";
 
 export const Header = () => {
+  const { navigate } = useNavigation();
   return (
     <View className="w-full flex-row items-center justify-between">
       <Logo width={100} height={100} />
@@ -12,6 +14,7 @@ export const Header = () => {
       <TouchableOpacity
         activeOpacity={0.7}
         className="flex-row items-center h-11 px-4 border border-violet-500 rounded-lg"
+        onPress={() => navigate("new")}
       >
         <Feather name="plus" size={20} color={colors.violet[500]} />
 
