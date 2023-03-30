@@ -14,9 +14,17 @@ export const DAY_SIZE =
 
 interface HabitDayProps extends TouchableOpacityProps {
   type: "completed" | "missed" | "empty";
+  amountOfHabits?: number;
+  amountOfCompletedHabits?: number;
+  date?: Date;
 }
 
-export const HabitDay = ({ type, ...rest }: HabitDayProps) => {
+export const HabitDay = ({
+  type,
+  amountOfHabits = 0,
+  amountOfCompletedHabits = 0,
+  ...rest
+}: HabitDayProps) => {
   if (type === "empty") {
     return (
       <View
