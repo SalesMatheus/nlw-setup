@@ -80,7 +80,6 @@ export const Home = () => {
               return (
                 <HabitDay
                   key={date.toISOString()}
-                  type="missed"
                   date={date}
                   amountOfHabits={dayWithHabit?.amount}
                   amountOfCompletedHabits={dayWithHabit?.completed}
