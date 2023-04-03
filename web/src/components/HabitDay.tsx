@@ -1,23 +1,26 @@
+import { useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
-import * as Checkbox from "@radix-ui/react-checkbox";
-import { ProgressBar } from "./ProgressBar";
 import clsx from "clsx";
-import { Check } from "phosphor-react";
 import dayjs from "dayjs";
+
+import { ProgressBar } from "./ProgressBar";
+import { HabitsList } from "./HabitsList";
 
 interface HabitDayProps {
   type: "progress" | "empty";
-  completed?: number;
+  defaultCompleted?: number;
   amount?: number;
   date: Date;
 }
 
 export function HabitDay({
   type,
-  completed = 0,
+  defaultCompleted = 0,
   amount = 0,
   date,
 }: HabitDayProps) {
+  const [completed, setCompleted] = useState(defaultCompleted);
+
   const completedPercentage =
     amount > 0 ? Math.round((completed / amount) * 100) : 0;
 
@@ -30,21 +33,28 @@ export function HabitDay({
     );
   }
 
+  const handleCompletedChange = (newCompleted: number) => {
+    setCompleted(newCompleted);
+  };
+
   return (
     <Popover.Root>
       <Popover.Trigger
-        className={clsx("w-10 h-10 border-2 rounded-lg", {
-          "bg-zinc-900 border-zinc-800": completedPercentage === 0,
-          "bg-violet-900 border-violet-700":
-            completedPercentage > 0 && completedPercentage < 20,
-          "bg-violet-800 border-violet-600":
-            completedPercentage >= 20 && completedPercentage < 40,
-          "bg-violet-700 border-violet-500":
-            completedPercentage >= 40 && completedPercentage < 60,
-          "bg-violet-600 border-violet-500":
-            completedPercentage >= 60 && completedPercentage < 80,
-          "bg-violet-500 border-violet-400": completedPercentage >= 80,
-        })}
+        className={clsx(
+          "w-10 h-10 border-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-violet-700 focus:ring-offset-2 focus:ring-offset-background",
+          {
+            "bg-zinc-900 border-zinc-800": completedPercentage === 0,
+            "bg-violet-900 border-violet-700":
+              completedPercentage > 0 && completedPercentage < 20,
+            "bg-violet-800 border-violet-600":
+              completedPercentage >= 20 && completedPercentage < 40,
+            "bg-violet-700 border-violet-500":
+              completedPercentage >= 40 && completedPercentage < 60,
+            "bg-violet-600 border-violet-500":
+              completedPercentage >= 60 && completedPercentage < 80,
+            "bg-violet-500 border-violet-400": completedPercentage >= 80,
+          }
+        )}
       />
 
       <Popover.Portal>
@@ -56,19 +66,7 @@ export function HabitDay({
 
           <ProgressBar progress={completedPercentage} />
 
-          <div className="mt-6 flex flex-col gap-3">
-            <Checkbox.Root className="flex items-center gap-3 group">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500">
-                <Checkbox.Indicator>
-                  <Check size={20} className="text-white" />
-                </Checkbox.Indicator>
-              </div>
-
-              <span className="font-semibold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-400">
-                Drink 2L of water
-              </span>
-            </Checkbox.Root>
-          </div>
+          <HabitsList date={date} onCompletedChanged={handleCompletedChange} />
 
           <Popover.Arrow className="fill-zinc-900 h-2 w-4" />
         </Popover.Content>
