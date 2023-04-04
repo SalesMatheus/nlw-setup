@@ -38,10 +38,9 @@ export const New = () => {
   const handleCreateNewHabit = async () => {
     try {
       if (!habitName.trim() || checked.length === 0) {
-        Alert.alert(
+        return Alert.alert(
           "Please, inform the habit name and select at least one day"
         );
-        return;
       }
 
       await api.post("/habits", {
