@@ -33,10 +33,9 @@ export const Home = () => {
       setLoading(true);
       const { data } = await api.get("/summary");
       setSummary(data);
-      console.log(data);
     } catch (error) {
       Alert.alert("Error", "Something went wrong");
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }

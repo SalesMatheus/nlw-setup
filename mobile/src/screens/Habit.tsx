@@ -35,9 +35,10 @@ export const Habit = () => {
   const { date } = route.params as HabitProps;
 
   const parsedDate = dayjs(date);
+
   const isDateInPast = parsedDate.endOf("day").isBefore(new Date());
-  const dayOfWeek = parsedDate.format("dddd");
-  const dayAndMonth = parsedDate.format("DD/MM");
+  const dayOfWeek = parsedDate.locale("en").format("dddd");
+  const dayAndMonth = parsedDate.locale("en").format("MM/DD");
 
   const habitsProgress = dayInfo?.possibleHabits.length
     ? generateProgressPercentage(

@@ -53,7 +53,7 @@ export const New = () => {
 
       Alert.alert("Success", "Habit created successfully");
     } catch (error) {
-      console.warn(error);
+      console.error(error);
       Alert.alert("Error", "Something went wrong");
     }
   };
